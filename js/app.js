@@ -9,20 +9,19 @@ const showProducts = (products) => {
     for (const product of allProducts) {
         const image = product.images;
         const div = document.createElement("div");
-
-        // div.classList.add("product");
         div.innerHTML = `
         <div class="single-product">
           <div>
              <img class="product-image" src=${product.image}></img>
           </div>
-             <h3>${product.title}</h3>
+             <h3 id="title">${product.title}</h3>
              <p>Category: ${product.category}</p>
              <h2>Price: $${product.price}</h2>
-             <strong>Rating: ${product.rating.rate}</strong>
+             <strong id="set-star">Rating: ${product.rating.rate}</strong>
              <p>Total Count: ${product.rating.count}</p>
              <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">Add to Cart</button>
           <button id="details-btn" class="btn btn-danger">Details</button>
+          <p id="show-description"></p>
         </div>
         `;
         document.getElementById("all-products").appendChild(div);
@@ -80,3 +79,18 @@ const updateTotal = () => {
     document.getElementById("total").innerText = grandTotal;
 };
 loadProducts();
+
+// show description onclick details
+fetch(`https://fakestoreapi.com/products`)
+    .then(res => res.json())
+    .then(data => showDetails(data))
+
+const showDetails = products => {
+    for (product of products) {
+        const description = product.description;
+        document.getElementById('details-btn').addEventListener('click', function () {
+            const details = document.getElementById('show-description');
+            details.innerText = description;
+        })
+    }
+}
