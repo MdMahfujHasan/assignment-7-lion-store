@@ -21,7 +21,6 @@ const showProducts = (products) => {
              <p>Total Count: ${product.rating.count}</p>
              <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">Add to Cart</button>
           <button id="details-btn" class="btn btn-danger">Details</button>
-          <p id="show-description"></p>
         </div>
         `;
         document.getElementById("all-products").appendChild(div);
@@ -88,9 +87,12 @@ fetch(`https://fakestoreapi.com/products`)
 const showDetails = products => {
     for (product of products) {
         document.getElementById('details-btn').addEventListener('click', function () {
-            document.getElementById('show-description').innerHTML = `
+            const div = document.createElement('div');
+            div.innerHTML = `
             <p>${product.description}</p>
             `
+            document.getElementById('all-products').appendChild(div);
         })
     }
 }
+showDetails();
