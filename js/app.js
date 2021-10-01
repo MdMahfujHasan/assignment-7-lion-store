@@ -31,7 +31,7 @@ let count = 0;
 const addToCart = (id, price) => {
     count = count + 1;
     updatePrice("price", price);
-
+    updateTotal();
     updateTaxAndCharge();
     document.getElementById("total-products").innerText = count;
 };
@@ -87,10 +87,10 @@ fetch(`https://fakestoreapi.com/products`)
 
 const showDetails = products => {
     for (product of products) {
-        const description = product.description;
         document.getElementById('details-btn').addEventListener('click', function () {
-            const details = document.getElementById('show-description');
-            details.innerText = description;
+            document.getElementById('show-description').innerHTML = `
+            <p>${product.description}</p>
+            `
         })
     }
 }
